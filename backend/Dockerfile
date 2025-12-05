@@ -7,10 +7,11 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential libpq-dev && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
+COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# When Railway builds from the repo root, ensure we copy only backend sources.
+COPY backend/ /app/
 
 EXPOSE 8000
 
